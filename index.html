@@ -38,6 +38,7 @@
             <ul class="nav-links">
                 <li class="active" data-view="Dashboard" onclick="showView('Dashboard')">Dashboard</li>
                 <div class="nav-label">Project Operations</div>
+                <li data-view="Task Calendar Activities" onclick="showView('Task Calendar Activities')">Task Calendar Activities</li>
                 <li data-view="Project Modification" onclick="showView('Project Modification')">Project Modification</li>
                 <li data-view="Parallel Testing Tracker" onclick="showView('Parallel Testing Tracker')">Parallel Testing Modification</li>
                 <li data-view="Project Tracker" onclick="showView('Project Tracker')">Project Portfolio</li>
@@ -85,8 +86,8 @@
             </div>
             <form id="entryForm">
                 <div id="formFields" class="form-beautified"></div>
-                <div class="modal-footer" style="padding: 20px; display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid var(--border);">
-                    <button type="button" class="btn-secondary" style="background: var(--border); color: var(--text-main); border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer;" onclick="closeModal()">Cancel</button>
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" onclick="closeModal()">Cancel</button>
                     <button type="submit" class="btn-primary">Save Changes</button>
                 </div>
             </form>
@@ -101,6 +102,21 @@
                 <span class="close-btn" onclick="closeDashModal()">&times;</span>
             </div>
             <div id="dashModalBody" style="max-height: 70vh; overflow-y: auto;"></div>
+        </div>
+    </div>
+
+    <!-- App Dialog Modal: For confirmations and notices -->
+    <div id="appDialogModal" class="modal dialog-modal">
+        <div class="modal-content dialog-content">
+            <div class="dialog-icon" id="appDialogIcon">!</div>
+            <div class="dialog-copy">
+                <h3 id="appDialogTitle">Confirm Action</h3>
+                <p id="appDialogMessage">Are you sure?</p>
+            </div>
+            <div class="modal-footer dialog-footer">
+                <button type="button" id="appDialogCancel" class="btn-secondary" onclick="closeAppDialog(false)">Cancel</button>
+                <button type="button" id="appDialogConfirm" class="btn-primary" onclick="closeAppDialog(true)">OK</button>
+            </div>
         </div>
     </div>
 
