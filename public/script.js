@@ -126,7 +126,7 @@ const directoryViews = {
         key: "status",
         label: "Status",
         type: "select",
-        options: ["To Do", "In Progress", "For Review", "Complete"],
+        options: ["To Do", "In Progress", "For Review", "Passed"],
         required: true
       },
       { key: "remarks", label: "Remarks", placeholder: "Testing remarks", type: "textarea" },
