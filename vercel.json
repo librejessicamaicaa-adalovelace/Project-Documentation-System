@@ -1,0 +1,92 @@
+{
+  "version": 2,
+  "buildCommand": "npm run vercel-build",
+  "outputDirectory": "public",
+  "rewrites": [
+    {
+      "source": "/api/:path*",
+      "destination": "/api/:path*"
+    },
+    {
+      "source": "/style.css",
+      "destination": "/style.css"
+    },
+    {
+      "source": "/script.js",
+      "destination": "/script.js"
+    },
+    {
+      "source": "/config.js",
+      "destination": "/config.js"
+    },
+    {
+      "source": "/supabaseClient.js",
+      "destination": "/supabaseClient.js"
+    },
+    {
+      "source": "/login-project-management.png",
+      "destination": "/login-project-management.png"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/api/:path*",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, no-cache, must-revalidate, proxy-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/config.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, no-cache, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/script.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, no-cache, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/style.css",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, no-cache, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/supabaseClient.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, no-cache, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/index.html",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, no-cache, must-revalidate"
+        }
+      ]
+    }
+  ],
+  "regions": ["iad1"]
+}
