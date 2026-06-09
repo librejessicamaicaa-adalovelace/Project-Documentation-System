@@ -1,0 +1,44 @@
+# Environment variables
+.env
+.env.local
+.env.*.local
+.env.production
+.env.production.local
+
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+
+# Vercel
+.vercel/
+.vercelignore
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Data files (local development)
+data/tasks.json
+data/app-state.json
+
+# Build
+.next/
+out/
+build/
+dist/
+
+# OS
+Thumbs.db
+.DS_Store
