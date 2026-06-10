@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Directory Management</title>
+    <link rel="stylesheet" href="style.css?v=20260609-1208">
+  </head>
+  <body>
+    <div class="app-layout hidden">
+      <aside class="sidebar">
+        <div id="userProfile" class="user-profile hidden" aria-label="Logged in user profile">
+          <span id="userProfileAvatar" class="user-profile-avatar" aria-hidden="true">A</span>
+          <span class="user-profile-copy">
+            <strong id="userProfileName">Admin</strong>
+            <small id="userProfileRole">Administrator</small>
+          </span>
+        </div>
+        <div class="sidebar-brand">
+          <span class="brand-mark">PM</span>
+          <h2>Project Management</h2>
+        </div>
+        <nav aria-label="Main navigation">
+          <button class="active" type="button" data-directory="dashboard">Dashboard</button>
+          <button type="button" data-directory="calendar">Task Calendar Activities</button>
+          <button type="button" data-directory="modification">Project Modification</button>
+          <button type="button" data-directory="testCases">Test Case Management</button>
+          <span class="sidebar-section-label">Directory Management</span>
+          <button type="button" data-directory="userManagement">User Management</button>
+          <button type="button" data-directory="assignee">Assignee Directory</button>
+          <button type="button" data-directory="project">Project Directory</button>
+          <button type="button" data-directory="qa">QA Directory</button>
+          <button type="button" data-directory="requestor">Requestor Directory</button>
+        </nav>
+      </aside>
+
+      <main class="page-shell">
+        <header class="app-header">
+          <h1 id="pageTitle">Project Modification</h1>
+
+          <div id="modificationFilterPanel" class="modification-filter-panel hidden">
+            <label>
+              <span>Project Filter</span>
+              <select id="modificationProjectFilter">
+                <option value="All">All Project</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="date-clock">
+            <span id="todayText">--/--/----</span>
+            <strong id="clockText">--:--:--</strong>
+          </div>
+
+          <div class="header-utility">
+            <div class="header-actions">
+              <button id="exportBtn" class="secondary">Export Excel</button>
+              <button id="createBtn" class="primary">+ Create Record</button>
+              <button id="loginBtn" class="secondary small">Login</button>
+            </div>
+          </div>
+        </header>
+
+      <section id="dashboardPanel" class="dashboard-panel hidden">
+        <div class="dashboard-welcome">
+          <div>
+            <h2>Welcome back, <span id="dashboardUserName">Admin</span></h2>
+            <p id="dashboardSubtitle">Here's what's happening with your projects today.</p>
+          </div>
+          <div class="dashboard-controls">
+            <label>
+              <span>Select Project</span>
+              <select id="dashboardProjectSelect">
+                <option value="All">All Projects</option>
+              </select>
+            </label>
+            <label>
+              <span>Theme</span>
+              <select id="dashboardThemeSelect">
+                <option value="maroonWhite">Maroon and White</option>
+                <option value="maroonBlack">Maroon and Black</option>
+                <option value="blackWhite">Black and White</option>
+                <option value="darkMode">Dark Mode</option>
+                <option value="midnightSlate">Midnight Slate</option>
+              </select>
+            </label>
+            <button id="logoutBtn" class="secondary dashboard-logout hidden" type="button">Logout</button>
+          </div>
+        </div>
+
+        <div class="dashboard-grid">
+          <article class="dashboard-section">
+            <div class="dashboard-section-header">
+              <span>Task Calendar</span>
+              <strong id="dashboardTaskMonthLabel">This Month</strong>
+            </div>
+            <div class="dashboard-cards two-up">
+              <button class="dashboard-card" type="button" data-dashboard-detail="monthlyTasks">
+                <span class="dashboard-card-label">
+                  <span class="metric-icon metric-icon-calendar" aria-hidden="true"></span>
+                  <span>Monthly Tasks</span>
+                </span>
+                <strong id="dashboardTaskMonthCount">0</strong>
+                <small>Active tasks this month</small>
+              </button>
+              <button class="dashboard-card" type="button" data-dashboard-detail="todayMeetings">
+                <span class="dashboard-card-label">
+                  <span class="metric-icon metric-icon-meeting" aria-hidden="true"></span>
+                  <span>Today's Meetings</span>
+                </span>
+                <strong id="dashboardMeetingDayCount">0</strong>
+                <small>Scheduled for today</small>
+              </button>
+            </div>
+          </article>
+
+          <article class="dashboard-section">
+            <div class="dashboard-section-header">
+              <span>Project Modification</span>
+              <strong>Count of Per Status</strong>
+            </div>
+            <div id="dashboardStatusCounts" class="dashboard-cards status-counts"></div>
+          </article>
+        </div>
+
+        <div class="dashboard-insights">
+          <article class="dashboard-widget">
+            <div class="dashboard-widget-header">
+              <span class="widget-icon widget-calendar" aria-hidden="true"></span>
+              <h3>Tasks Overview</h3>
+            </div>
+            <div id="dashboardMiniCalendar" class="dashboard-mini-calendar"></div>
+          </article>
+
+          <article class="dashboard-widget">
+            <div class="dashboard-widget-header">
+              <span class="widget-icon widget-distribution" aria-hidden="true"></span>
+              <h3>Status Distribution</h3>
+            </div>
+            <div class="dashboard-distribution">
+              <div id="dashboardDonut" class="dashboard-donut">
+                <strong id="dashboardDistributionTotal">0</strong>
+                <span>Total</span>
+              </div>
+              <div id="dashboardDistributionLegend" class="dashboard-legend"></div>
+            </div>
+          </article>
+
+          <article class="dashboard-widget">
+            <div class="dashboard-widget-header">
+              <span class="widget-icon widget-activity" aria-hidden="true"></span>
+              <h3>Recent Activity</h3>
+            </div>
+            <div id="dashboardRecentActivity" class="dashboard-recent-list"></div>
+          </article>
+
+          <article class="dashboard-widget dashboard-health-widget">
+            <div class="dashboard-widget-header">
+              <span class="widget-icon widget-health" aria-hidden="true"></span>
+              <h3>Project Health</h3>
+            </div>
+            <div id="dashboardProjectHealth" class="dashboard-health-list"></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="calendarPanel" class="calendar-panel hidden">
+        <div class="calendar-filter">
+          <label>
+            <span>Select Project</span>
+            <select id="calendarProjectFilter">
+              <option value="All">All Projects</option>
+            </select>
+          </label>
+          <p id="calendarProjectText">All enrolled projects included.</p>
+        </div>
+
+        <div class="calendar-workspace">
+          <div class="calendar-shell">
+            <div class="calendar-toolbar">
+              <div class="calendar-tabs" aria-label="Calendar view mode">
+                <button id="weekViewBtn" type="button" class="secondary">Week</button>
+                <button id="monthViewBtn" type="button" class="primary">Month</button>
+              </div>
+              <button id="prevCalendarBtn" type="button" class="secondary calendar-nav" aria-label="Previous month">&#8249;</button>
+              <h2 id="calendarTitle">June 2026</h2>
+              <button id="nextCalendarBtn" type="button" class="secondary calendar-nav" aria-label="Next month">&#8250;</button>
+              <button id="todayCalendarBtn" type="button" class="secondary">Today</button>
+            </div>
+
+            <div id="calendarGrid" class="calendar-grid"></div>
+          </div>
+
+          <aside class="calendar-detail-panel">
+            <div class="selected-date-header">
+              <span>Selected Date</span>
+              <strong id="selectedDateText">--/--/----</strong>
+            </div>
+            <form id="calendarTaskForm" class="calendar-task-form">
+              <label class="calendar-hidden-field">
+                <span>Project</span>
+                <select id="calendarTaskProject" aria-label="Task project" required></select>
+              </label>
+              <label class="calendar-hidden-field">
+                <span>Date</span>
+                <input id="calendarTaskDate" type="date" required>
+              </label>
+              <label class="calendar-details-field">
+                <span class="sr-only">Details</span>
+                <textarea id="calendarTaskTitle" maxlength="160" required placeholder="Details..."></textarea>
+              </label>
+              <div class="calendar-task-actions">
+                <button id="cancelCalendarTaskBtn" type="button" class="secondary hidden">Cancel</button>
+                <button id="addCalendarTaskBtn" type="submit" class="primary">Add task</button>
+              </div>
+            </form>
+            <div class="selected-activities">
+              <h3 id="selectedActivityCount">0 Activities</h3>
+              <div id="selectedActivityList" class="selected-activity-list">
+                <p>No activities yet.</p>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="recordFormPanel" class="record-form-panel hidden">
+        <form id="recordForm">
+          <input type="hidden" id="editId">
+          <h2 id="formTitle">Create Directory Record</h2>
+          <div id="formFields" class="form-grid"></div>
+
+          <div class="form-actions">
+            <button type="button" id="cancelEditBtn" class="secondary">Cancel</button>
+            <button type="submit" id="saveBtn" class="primary">Save Record</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="records-panel">
+        <div class="table-wrap">
+          <table>
+            <thead id="tableHead"></thead>
+            <tbody id="recordRows">
+              <tr>
+                <td colspan="5" class="empty-cell">No records found.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      </main>
+    </div>
+
+    <div id="loginModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+      <form id="loginForm" class="login-modal">
+        <div class="login-panel">
+          <div class="login-header">
+            <div class="login-brand-row">
+              <span class="login-brand-mark">PM</span>
+              <span>Secure Workspace</span>
+            </div>
+            <h2 id="loginTitle">Login to your account</h2>
+          </div>
+          <label>
+            <span>Username</span>
+            <input id="loginUsername" autocomplete="username" autocapitalize="none" spellcheck="false" required>
+          </label>
+          <label class="password-label">
+            <span>Password</span>
+            <div class="password-input-wrapper">
+              <input id="loginPassword" type="password" autocomplete="current-password" required>
+              <button type="button" id="togglePassword" class="password-toggle" aria-label="Show password" title="Show/Hide password">
+                <span class="toggle-icon" aria-hidden="true"></span>
+              </button>
+            </div>
+          </label>
+          <label class="remember-me-label">
+            <input type="checkbox" id="rememberMe" autocomplete="off">
+            <span>Remember me for 30 days</span>
+          </label>
+          <p id="loginMessage" class="login-message" aria-live="polite"></p>
+          <p id="loginLockMessage" class="login-lock-message" aria-live="polite"></p>
+          <div class="form-actions">
+            <button type="submit" class="primary" id="loginSubmitBtn">Login</button>
+            <button type="button" class="secondary" id="cancelLoginBtn">Cancel</button>
+          </div>
+          <p class="login-section-note">
+            <span>Project Coordination &amp; Documentation Section</span>
+            <span>(Information Technology Department)</span>
+          </p>
+        </div>
+        <div class="login-visual" aria-hidden="true">
+          <img class="login-image" src="login-project-management.png" alt="">
+        </div>
+      </form>
+    </div>
+
+    <div id="deleteModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="deleteTitle" aria-describedby="deleteMessage">
+      <section class="confirm-modal">
+        <div class="confirm-header">
+          <span class="confirm-mark">!</span>
+          <div>
+            <h2 id="deleteTitle">Delete Record</h2>
+            <p id="deleteMessage">This action cannot be undone.</p>
+          </div>
+        </div>
+        <div class="confirm-record">
+          <span>Selected record</span>
+          <strong id="deleteRecordName">Directory record</strong>
+        </div>
+        <div class="form-actions">
+          <button id="cancelDeleteBtn" type="button" class="secondary">Cancel</button>
+          <button id="confirmDeleteBtn" type="button" class="danger">Delete</button>
+        </div>
+      </section>
+    </div>
+
+    <div id="dashboardDetailModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="dashboardDetailTitle">
+      <section class="detail-modal">
+        <div class="detail-modal-header">
+          <h2 id="dashboardDetailTitle">Details</h2>
+          <button id="closeDashboardDetailBtn" type="button" class="detail-close" aria-label="Close dashboard details">&times;</button>
+        </div>
+        <div id="dashboardDetailBody" class="detail-modal-body"></div>
+      </section>
+    </div>
+
+    <div id="attachmentPreviewModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="attachmentPreviewTitle">
+      <section class="attachment-modal">
+        <div class="detail-modal-header">
+          <h2 id="attachmentPreviewTitle">Attachment Preview</h2>
+          <button id="closeAttachmentPreviewBtn" type="button" class="detail-close" aria-label="Close attachment preview">&times;</button>
+        </div>
+        <div class="attachment-modal-body">
+          <img id="attachmentPreviewImage" alt="">
+        </div>
+      </section>
+    </div>
+
+    <script src="config.js?v=20260609-1208"></script>
+    <script src="script.js?v=20260609-1208"></script>
+  </body>
+</html>
