@@ -1,0 +1,18 @@
+{
+  "name": "shared-project-task-tracker",
+  "version": "1.0.0",
+  "description": "A shared project task tracker with Supabase backend for multiple users and computers.",
+  "main": "server.js",
+  "scripts": {
+    "build": "node scripts/generate-config.js",
+    "start": "node server.js",
+    "dev": "node server.js",
+    "vercel-build": "node scripts/generate-config.js",
+    "check": "node --check server.js && node --check scripts/generate-config.js && node --check api/data.js && node --check api/tasks.js && node --check public/script.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.45.0"
+  },
+  "devDependencies": {},
+  "license": "MIT"
+}
